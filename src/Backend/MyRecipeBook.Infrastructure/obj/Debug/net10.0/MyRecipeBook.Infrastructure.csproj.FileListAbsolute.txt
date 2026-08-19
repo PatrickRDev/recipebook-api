@@ -1,0 +1,11 @@
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\bin\Debug\net10.0\MyRecipeBook.Infrastructure.deps.json
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\bin\Debug\net10.0\MyRecipeBook.Infrastructure.dll
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\bin\Debug\net10.0\MyRecipeBook.Infrastructure.pdb
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\MyRecipeBook.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\MyRecipeBook.Infrastructure.AssemblyInfoInputs.cache
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\MyRecipeBook.Infrastructure.AssemblyInfo.cs
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\MyRecipeBook.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\MyRecipeBook.Infrastructure.dll
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\refint\MyRecipeBook.Infrastructure.dll
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\MyRecipeBook.Infrastructure.pdb
+D:\Workspace\Projects.NET\MyRecipeBook\src\Backend\MyRecipeBook.Infrastructure\obj\Debug\net10.0\ref\MyRecipeBook.Infrastructure.dll
