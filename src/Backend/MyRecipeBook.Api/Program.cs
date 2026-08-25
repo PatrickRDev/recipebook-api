@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using System.Globalization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -9,8 +13,30 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(); //1 fiz manualmente esta adição.
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    //Aqui você pode configurar as opções de localização, como idiomas suportados, cultura padrão, etc.
+
+    var supportedCultures = new List<CultureInfo> { new ("en"), new CultureInfo("pt-BR"), new ("es") };
+
+    options.DefaultRequestCulture = new RequestCulture("en");
+
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+
+    options.RequestCultureProviders = new List<IRequestCultureProvider>
+    {
+        new AcceptLanguageHeaderRequestCultureProvider()
+    };
+
+});
+
 var app = builder.Build();
 
+//vamos falar pra api que ela vai usar a localização configurada acima.
+var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
+
+app.UseRequestLocalization(localizationOptions.Value);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
