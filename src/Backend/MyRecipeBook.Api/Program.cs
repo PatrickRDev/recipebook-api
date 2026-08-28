@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using MyRecipeBook.Api.Filters;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,10 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     };
 
 });
-
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add<ExceptionFilter>();
+});
 var app = builder.Build();
 
 //vamos falar pra api que ela vai usar a localização configurada acima.
