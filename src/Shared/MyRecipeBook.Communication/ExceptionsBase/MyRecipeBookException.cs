@@ -4,6 +4,6 @@ public abstract class MyRecipeBookException : System.Exception
 {
     public MyRecipeBookException()
     {
-        
+            
     }
 }
