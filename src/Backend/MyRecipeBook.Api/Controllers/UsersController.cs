@@ -12,10 +12,10 @@ public class UsersController : ControllerBase
 {
 
     [HttpPost]
-    public IActionResult Register([FromBody] RequestRegisterUserAccountJson request)
+    public IActionResult Register([FromBody] RequestRegisterUserAccountJson request, [FromServices] IRegisterUserAccountUseCase useCase)
     {
         //Registo a conta de uma pessoa. 
-        var useCase = new RegisterUserAccountUseCase();
+       // var useCase = new RegisterUserAccountUseCase();
         useCase.Execute(request);
         return Created();
     }

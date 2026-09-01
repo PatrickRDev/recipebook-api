@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using MyRecipeBook.Api.Filters;
+using MyRecipeBook.Domain.Security.PasswordHashing;
 using System.Globalization;
+using MyRecipeBook.Infrastructure;
+using MyRecipeBook.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,11 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(); //1 fiz manualmente esta adição.
+
+MyRecipeBook.Infrastructure.DependencyInjectionExtension.AddInfrastructureServices(builder.Services);
+//MyRecipeBook.Application.DependencyInjectionExtension.AddApplicationServices(builder.Services);
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

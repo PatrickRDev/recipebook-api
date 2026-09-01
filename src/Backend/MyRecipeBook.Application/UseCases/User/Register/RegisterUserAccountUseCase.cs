@@ -1,17 +1,25 @@
 ﻿using Mapster;
 using MyRecipeBook.Communication.ExceptionsBase;
 using MyRecipeBook.Communication.Request;
+using MyRecipeBook.Domain.Security.PasswordHashing;
 
 namespace MyRecipeBook.Application.UseCases.User.Register;
 
-public class RegisterUserAccountUseCase
+public class RegisterUserAccountUseCase : IRegisterUserAccountUseCase
 {
+    private readonly IPasswordHashing _passwordHashing;
+    public RegisterUserAccountUseCase(IPasswordHashing passwordHashing)
+    {
+        _passwordHashing = passwordHashing;
+    }
     public void Execute(RequestRegisterUserAccountJson request)
     {
         //Registo a conta de uma pessoa. 
         ValidationAndThrowOnFailures(request);
 
         var user = request.Adapt<Domain.Entities.User>();
+
+        user.Password = _passwordHashing.HashPassword(request.Password);
 
     }
 
