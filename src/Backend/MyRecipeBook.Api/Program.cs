@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using MyRecipeBook.Api.Filters;
-using MyRecipeBook.Domain.Security.PasswordHashing;
-using System.Globalization;
-using MyRecipeBook.Infrastructure;
 using MyRecipeBook.Application;
+using MyRecipeBook.Infrastructure;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new MyRecipeBook.Api.Converters.StringConverter());
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(); //1 fiz manualmente esta adição.
 
-MyRecipeBook.Infrastructure.DependencyInjectionExtension.AddInfrastructureServices(builder.Services);
+//MyRecipeBook.Infrastructure.DependencyInjectionExtension.AddInfrastructureServices(builder.Services);
 //MyRecipeBook.Application.DependencyInjectionExtension.AddApplicationServices(builder.Services);
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -43,6 +45,8 @@ builder.Services.AddMvc(options =>
 {
     options.Filters.Add<ExceptionFilter>();
 });
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true); // Configura o roteamento para usar URLs em letras minúsculas.
 var app = builder.Build();
 
 //vamos falar pra api que ela vai usar a localização configurada acima.
