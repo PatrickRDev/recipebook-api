@@ -11,5 +11,7 @@ public static class DependencyInjectionExtension
     public static void AddApplicationServices(this IServiceCollection services)
     {
       services.AddScoped<IRegisterUserAccountUseCase, RegisterUserAccountUseCase>();
+
+      
     }
 }
