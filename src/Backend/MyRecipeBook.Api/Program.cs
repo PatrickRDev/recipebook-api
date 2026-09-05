@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using MyRecipeBook.Api.Filters;
 using MyRecipeBook.Application;
 using MyRecipeBook.Infrastructure;
+using MyRecipeBook.Infrastructure.Migrations;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,4 +67,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await ExecuteMigrations();
+
 app.Run();
+
+async Task ExecuteMigrations()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+
+    DataBaseMigration.ExecuteMigrations(scope.ServiceProvider);
+}
