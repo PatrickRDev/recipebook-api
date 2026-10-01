@@ -77,3 +77,5 @@ async Task ExecuteMigrations()
 
     DataBaseMigration.ExecuteMigrations(scope.ServiceProvider);
 }
+
+public partial class Program { } // Adicione esta linha para tornar a classe Program pública e parcial. 
