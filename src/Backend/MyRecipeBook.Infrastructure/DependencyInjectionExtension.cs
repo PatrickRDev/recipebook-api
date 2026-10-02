@@ -36,25 +36,30 @@ public static class DependencyInjectionExtension
             /////////////////////////////////////////////////////////////////////////////////////
             services.AddFluentMigratorCore().ConfigureRunner(config =>
             {
-                var connectionString = configuration.GetConnectionString("MySqlConnection")!;
+                
 
                 config
                 .AddMySql5()
-                .WithGlobalConnectionString(connectionString)
+                .WithGlobalConnectionString(_ =>
+                {
+                    var connectionString = configuration.GetConnectionString("MySqlConnection")!;
+
+                    return connectionString;
+                } )
                 .ScanIn(Assembly.Load("MyRecipeBook.Infrastructure")).For.All();
             }
             
             );
 
-          /*  services.AddDbContext<MyRecipeBookDbContext>(options =>
-            {
+            /*  services.AddDbContext<MyRecipeBookDbContext>(options =>
+              {
 
-                options.UseSqlServer("Server=localhost;Database=meulivrodereceitas;User Id=sa;Password=@Password123;TrustServerCertificate=True;");
-            }); */
-               
+                  options.UseSqlServer("Server=localhost;Database=meulivrodereceitas;User Id=sa;Password=@Password123;TrustServerCertificate=True;");
+              }); */
 
-            
-            
+
+
+
         }
 
        

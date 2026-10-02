@@ -1,9 +1,12 @@
 ﻿using Azure;
 using CommonTestUtilities.Requests;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MyRecipeBook.Application.UseCases.User.Register;
 using MyRecipeBook.Domain.Extensions;
 using MyRecipeBook.Exception;
+using MyRecipeBook.Infrastructure.DataAccess;
 using MySqlX.XDevAPI.Common;
 using Shouldly;
 using System.Diagnostics.CodeAnalysis;
@@ -15,13 +18,16 @@ using WebApi.Tests.InlineData;
 
 namespace WebApi.Tests.User.Register;
 
-public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Program>>
+public class RegisterUserAccountTests : IClassFixture<MyRecipeBookApplicationFactory>
 {
     private const string REQUEST_URI = "/users";
     private readonly HttpClient _httpClient;
-    public RegisterUserAccountTests(WebApplicationFactory<Program> factory)
+    private readonly MyRecipeBookDbContext _dbContext;
+    public RegisterUserAccountTests(MyRecipeBookApplicationFactory factory)
     {
         _httpClient = factory.CreateClient();
+        var scope = factory.Services.CreateScope();
+        _dbContext = scope.ServiceProvider.GetRequiredService<MyRecipeBookDbContext>();
     }
 
     [Fact]
@@ -39,6 +45,8 @@ public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Prog
 
         responseData.RootElement.GetProperty("name").GetString().ShouldBe(request.Name);
         responseData.RootElement.GetProperty("tokens").GetProperty("accesToken").GetString().ShouldBeEmpty();
+
+        var userExists = await _dbContext.Users.AnyAsync(user => user.Active && user.Name.Equals(request.Name) && user.Email.Equals(request.Email));
     }
 
     [Theory]
@@ -67,11 +75,13 @@ public class RegisterUserAccountTests : IClassFixture<WebApplicationFactory<Prog
         }
         );
 
+        var userExists = await _dbContext.Users.AnyAsync(user => user.Active && user.Name.Equals(request.Name) && user.Email.Equals(request.Email));
 
+        userExists.ShouldBeFalse();
 
     }
+
 
     
-    }
 
 }
